@@ -1,5 +1,5 @@
 app:
-  data_dir: ./data_nxbcl
+  data_dir: ./data
 
 git:
   repo: https://github.com/ariafatah0711/a
