@@ -5,7 +5,7 @@ from nxbcl.cli import main as cli_main
 
 
 def test_cleanup_runtime_artifacts_removes_state_files(tmp_path, monkeypatch):
-    data_path = tmp_path / "data_nxbcl"
+    data_path = tmp_path / "data"
     runtime_dir = data_path / "runtime"
     state_dir = runtime_dir / "state"
     tmp_dir = data_path / "tmp"

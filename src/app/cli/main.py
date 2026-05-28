@@ -351,7 +351,7 @@ def build_parser() -> argparse.ArgumentParser:
     init_parser = subparsers.add_parser("init-db", help="Create data directories and SQLite schema")
     init_parser.set_defaults(func=cmd_init_db)
 
-    sync_parser = subparsers.add_parser("sync", help="Sync challenge repo into data_nxbcl/chall")
+    sync_parser = subparsers.add_parser("sync", help="Sync challenge repo into data/chall")
     sync_parser.add_argument("--dry-run", action="store_true", help="Print sync target without cloning")
     sync_parser.set_defaults(func=cmd_sync)
 
@@ -367,10 +367,10 @@ def build_parser() -> argparse.ArgumentParser:
     serve_parser.add_argument("--reload", action="store_true", help="Enable uvicorn reload")
     serve_parser.set_defaults(func=cmd_serve)
 
-    up_parser = subparsers.add_parser("up", help="Start the compose stack in data_nxbcl/chall")
+    up_parser = subparsers.add_parser("up", help="Start the compose stack in data/chall")
     up_parser.set_defaults(func=cmd_up)
 
-    down_parser = subparsers.add_parser("down", help="Stop the compose stack in data_nxbcl/chall")
+    down_parser = subparsers.add_parser("down", help="Stop the compose stack in data/chall")
     down_parser.set_defaults(func=cmd_down)
 
     ps_parser = subparsers.add_parser("ps", help="Show compose stack status")

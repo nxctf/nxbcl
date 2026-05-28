@@ -130,12 +130,12 @@ nxbcl serve --host 0.0.0.0 --port 8080
 Background lifecycle commands:
 
 ```bash
-cd ~/nxbcl/data_nxbcl
+cd ~/nxbcl/data
 sudo chown -R "$USER:$USER" chall
 sudo chmod -R u+rwX chall
 sudo chmod -R 777 chall/metadata 2>/dev/null || true
 
-cd ~/nxbcl/data_nxbcl
+cd ~/nxbcl/data
 sudo chown -R "$USER:$USER" chall
 sudo chmod -R 777 chall
 

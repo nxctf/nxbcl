@@ -1,6 +1,6 @@
 # Local runtime and configuration files
 nxbcl.yml
-data_nxbcl/
+data/
 data/
 .env
 
@@ -35,3 +35,5 @@ launcher/
 *.db
 *.sqlite
 *.sqlite3
+
+data_nxbcl/

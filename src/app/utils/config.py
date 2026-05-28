@@ -60,7 +60,7 @@ class NXBCLConfig:
 
         self.enabled = True
 
-        self.data_dir = self.nxbcl_raw.get("data_dir", "./data_nxbcl")
+        self.data_dir = self.nxbcl_raw.get("data_dir", "./data")
         self.panel_base_ip = ""
 
         git = self.nxbcl_raw.get("git", {})
