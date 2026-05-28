@@ -36,6 +36,28 @@ def ensure_runtime_dirs() -> None:
         path.mkdir(parents=True, exist_ok=True)
     init_db(config.db_file)
 
+def repair_chall_permissions() -> None:
+    config = get_nxbcl_config()
+    chall_dir = config.chall_dir
+
+    if not chall_dir.exists():
+        return
+
+    try:
+        subprocess.run(
+            ["chmod", "-R", "777", str(chall_dir)],
+            check=False,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        subprocess.run(
+            ["chown", "-R", f"{os.getuid()}:{os.getgid()}", str(chall_dir)],
+            check=False,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    except Exception:
+        pass
 
 def remove_path(path: Path) -> None:
     if path.is_dir():
@@ -127,6 +149,8 @@ def run_compose_command(arguments: list[str]) -> subprocess.CompletedProcess[str
         print("Run `nxbcl sync` first.", file=sys.stderr)
         return None
 
+    repair_chall_permissions()
+
     try:
         return subprocess.run(
             ["docker", "compose", *arguments],
@@ -153,8 +177,13 @@ def cmd_init_db(_args: argparse.Namespace) -> int:
 def cmd_sync(args: argparse.Namespace) -> int:
     if not args.dry_run:
         ensure_runtime_dirs()
-    return sync(dry_run=args.dry_run)
 
+    exit_code = sync(dry_run=args.dry_run)
+
+    if not args.dry_run and exit_code == 0:
+        repair_chall_permissions()
+
+    return exit_code
 
 def cmd_challenges(_args: argparse.Namespace) -> int:
     config = get_nxbcl_config()
@@ -206,6 +235,7 @@ def cmd_serve(args: argparse.Namespace) -> int:
 
 def cmd_up(_args: argparse.Namespace) -> int:
     ensure_runtime_dirs()
+    repair_chall_permissions()
     result = run_compose_command(["up", "-d", *COMPOSE_SERVICES])
     if result is None:
         return 1
